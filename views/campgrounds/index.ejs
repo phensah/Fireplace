@@ -1,4 +1,7 @@
 <% layout('layouts/boilerplate') %>
+    <div class="card mb-3">
+        <div class="card-img" id="map" style="width: 100%; height: 500px;"></div>
+    </div>
     <h1>All Campgrounds</h1>
     <div>
         <a href="/campgrounds/new">Add Campground</a>
@@ -7,23 +10,31 @@
         <div class="card" mb-3>
             <div class="row">
                 <div id="<%= campground._id %>" class="carousel slide col-md-4" data-bs-ride="true">
-                    <div class="carousel-inner">
-                        <% campground.images.forEach((img, i)=> { %>
-                            <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
-                                <img src="<%= img.url %>" class="d-block w-100" alt="">
-                            </div>
-                            <% }) %>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#<%= campground._id %>"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#<%= campground._id %>"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                    <% if(campground.images.length) { %>
+                        <div class="carousel-inner">
+                            <% campground.images.forEach((img, i)=> { %>
+                                <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                    <img src="<%= img.url %>" class="d-block w-100" alt="">
+                                </div>
+                                <% }) %>
+                        </div>
+                        <% } else { %>
+                            <img src="https://res.cloudinary.com/dzu4hk2sw/image/upload/v1748945727/YelpCamp/nqfuuxscn9akxc5tmmkp.jpg"
+                                class="d-block w-100" alt="">
+                            <% } %>
+                                <% if(campground.images.length> 1) { %>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#<%= campground._id %>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#<%= campground._id %>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                    <% } %>
+
                 </div>
                 <!-- <div class="col-md-4">
                     <img class="img-fluid" alt="" src="<%= campground.image %>">
@@ -48,3 +59,10 @@
             </div>
         </div>
         <% } %>
+
+            <script>
+                const mapToken = '<%- process.env.MAPBOX_TOKEN %>';
+                const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+            </script>
+
+            <script src="/javascripts/clusterMap.js"></script>

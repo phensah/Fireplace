@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const cities = require('./cities');
+const cities = require('./cities3');
 const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campground');
 
@@ -15,23 +15,28 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 50; i++) {
-        const random1000 = Math.floor(Math.random() * 1000);
+    for (let i = 0; i < 300; i++) {
+        const random528 = Math.floor(Math.random() * 528);
         const price = Math.floor(Math.random() * 20) + 10;
         const camp = new Campground({
-            author: '683db8f322a7e7bdcf44ae80',
-            location: `${cities[random1000].city}, ${cities[random1000].state}`,
+            author: '683db8f322a7e7bdcf44ae80', // User ID
+            location: `${cities[random528].city}, ${cities[random528].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum dolor corrupti iure numquam maxime placeat nam ad tenetur quae minus assumenda nihil suscipit fugiat perspiciatis adipisci officia, odio, ex error.Quas quam quod autem, modi consequuntur ut neque dolorum temporibus excepturi aut numquam quibusdam laudantium facilis saepe magnam tenetur, necessitatibus illo voluptates soluta distinctio corrupti similique. Minima temporibus enim quo?',
             price,
+            geometry: {
+                "type": "Point",
+                "coordinates": [cities[random528].longitude,
+                cities[random528].latitude]
+            },
             images: [
                 {
-                    url: 'https://res.cloudinary.com/dzu4hk2sw/image/upload/v1748930677/YelpCamp/i2qhfreqob2chx3y42jd.jpg',
-                    filename: 'YelpCamp/i2qhfreqob2chx3y42jd',
+                    url: 'https://res.cloudinary.com/dzu4hk2sw/image/upload/v1749017948/YelpCamp/cuxw17860jj8qwbwib8h.jpg',
+                    filename: 'YelpCamp/cuxw17860jj8qwbwib8h',
                 },
                 {
-                    url: 'https://res.cloudinary.com/dzu4hk2sw/image/upload/v1748930678/YelpCamp/vkqnb8ug1xi6gyuris3f.jpg',
-                    filename: 'YelpCamp/vkqnb8ug1xi6gyuris3f',
+                    url: 'https://res.cloudinary.com/dzu4hk2sw/image/upload/v1749017947/YelpCamp/e0du5ck0rf5jmixmtsnq.jpg',
+                    filename: 'YelpCamp/e0du5ck0rf5jmixmtsnq',
                 }
             ]
         });
