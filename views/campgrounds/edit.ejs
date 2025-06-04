@@ -28,8 +28,8 @@
                             <% campground.images.forEach((image, i)=> { %>
                                 <div class="col">
                                     <div class="card">
-                                        <label for="image-<%= i %>"><img class="card-img" src="<%= image.thumbnail %>"
-                                                alt="">
+                                        <label for="image-<%= i %>"><img crossorigin="anonymous" class="card-img"
+                                                src="<%= image.thumbnail %>" alt="">
                                             <div class="card-img-overlay text-end pt-1 pe-2">
                                                 <input class="form-check-input" type="checkbox" name="deleteImages[]"
                                                     value="<%= image.filename %>" id="image-<%= i %>">
@@ -73,3 +73,4 @@
             </div>
         </div>
     </div>
+    <script src="/javascripts/addFileNames.js"></script>

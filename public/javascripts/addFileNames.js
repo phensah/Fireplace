@@ -8,7 +8,7 @@ function previewMultiple(event) {
         const urls = URL.createObjectURL(event.target.files[i]);
         const fileName = event.target.files[i].name;
         imgPreview.innerHTML += `<figure class="figure mt-2 col-4 col-lg-3">
-    <img class="img-thumbnail rounded-4" src="${urls}"><figcaption class="figure-caption">${fileName}</figcaption></figure>
+    <img crossorigin="anonymous" class="img-thumbnail rounded-4" src="${urls}"><figcaption class="figure-caption">${fileName}</figcaption></figure>
     `;
     }
 }
