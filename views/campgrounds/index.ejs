@@ -1,13 +1,13 @@
 <% layout('layouts/boilerplate') %>
     <div class="card mb-3">
-        <div class="card-img" id="map" style="width: 100%; height: 500px;"></div>
+        <div class="card-img" id="cluster-map"></div>
     </div>
     <h1>All Campgrounds</h1>
     <div>
         <a href="/campgrounds/new">Add Campground</a>
     </div>
     <% for (let campground of campgrounds) { %>
-        <div class="card" mb-3>
+        <div class="card mb-4" mb-3>
             <div class="row">
                 <div id="<%= campground._id %>" class="carousel slide col-md-4" data-bs-ride="true">
                     <% if(campground.images.length) { %>
