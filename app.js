@@ -3,11 +3,11 @@
 // }
 
 require('dotenv').config();
-// console.log(process.env.SECRET);
 const express = require('express');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const Joi = require('joi');
 const ExpressError = require('./utils/ExpressError');
@@ -21,8 +21,10 @@ const helmet = require('helmet');
 const usersRoutes = require('./routes/users');
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
+const dbUrl = 'mongodb://localhost:27017/yelp-camp';
+// process.env.DB_URL
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp');
+mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -44,8 +46,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(sanitizeV5({ replaceWith: '_' }));
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+
+store.on('error', function (e) {
+    console.log('Session store error', e);
+})
 
 const sessionConfig = {
+    store,
     name: 'bleh',
     secret: 'thisshouldbeabettersecret',
     resave: false,
