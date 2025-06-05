@@ -21,8 +21,9 @@ const helmet = require('helmet');
 const usersRoutes = require('./routes/users');
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
-const dbUrl = process.env.DB_URL;
-// 'mongodb://localhost:27017/yelp-camp'
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const secret = process.env.SECRET || 'thisshouldbeabettersecret';
+const port = process.env.PORT;
 
 mongoose.connect(dbUrl);
 
@@ -50,7 +51,7 @@ const store = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: 'thisshouldbeabettersecret!'
+        secret
     }
 });
 
@@ -61,7 +62,7 @@ store.on('error', function (e) {
 const sessionConfig = {
     store,
     name: 'bleh',
-    secret: 'thisshouldbeabettersecret',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -160,8 +161,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err });
 });
 
-app.listen(3000, () => {
-    console.log('Serving on port 3000')
+app.listen(port || 3000, () => {
+    console.log(`Serving on port ${port}`)
 });
 
 // image: `https://picsum.photos/400?random=${Math.random()}`
