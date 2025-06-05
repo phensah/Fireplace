@@ -64,11 +64,12 @@
                                 required><%= campground.description %></textarea>
                             <div class="valid-feedback">Looks good!</div>
                         </div>
-                        <div class="mb-3">
-                            <button class="btn btn-info">Update Campground</button>
+                        <div class="mb-3 d-flex">
+                            <button class="btn btn-info">Update Fireplace</button>
+                            <a class="btn btn-danger ms-auto" href="/campgrounds/<%= campground._id %>">Back to Fireplace</a>
                         </div>
                     </form>
-                    <a href="/campgrounds/<%= campground._id %>">Back to Campground</a>
+                    
                 </div>
             </div>
         </div>

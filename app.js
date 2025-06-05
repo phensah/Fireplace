@@ -21,8 +21,8 @@ const helmet = require('helmet');
 const usersRoutes = require('./routes/users');
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
-const dbUrl = process.env.DB_URL;
-// 'mongodb://localhost:27017/yelp-camp'
+const dbUrl = 'mongodb://localhost:27017/yelp-camp';
+// process.env.DB_URL
 
 mongoose.connect(dbUrl);
 
